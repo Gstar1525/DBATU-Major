@@ -1,0 +1,15 @@
+.text{
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
+    background-color: rebeccapurple;
+    color: yellow;
+    border: solid 2px black;
+
+    width: 50%;
+    border-radius: 10px;
+
+    margin: auto;
+    padding: 10px;
+}
