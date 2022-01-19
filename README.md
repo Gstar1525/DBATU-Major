@@ -25,4 +25,4 @@ npm run dev
 
 - home - ``` / ```
 - dashboard - ``` /api/v1/dashboard ```
-- dashboard setting - ``` /api/v1/setting ```
+- dashboard setting - ``` /api/v1/dashboard/setting ```
