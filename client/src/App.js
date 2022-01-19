@@ -6,7 +6,7 @@ function App() {
   const [message, setMessage] = useState("");
   useEffect(() => {
     (async () => {
-      const json = await fetchData();
+      const json = await fetchData("/api/v1/dashboard");
       setMessage(json.message);
     })();
   }, [])
