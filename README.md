@@ -23,6 +23,8 @@ npm run dev
 
 ## API routes
 
-- home - ``` / ```
-- dashboard - ``` /api/v1/dashboard ```
-- dashboard setting - ``` /api/v1/dashboard/setting ```
+- login - ``` /api/v1/auth/login ```
+- signup - ``` /api/v1/auth/signup ```
+- dashboard - ``` /api/v1/home/dashboard ```
+- settings - ``` /api/v1/home/settings ```
+- profile settings - ``` /api/v1/home/settings/profile ```

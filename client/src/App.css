@@ -1,15 +1,88 @@
-.text{
+body{
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: monospace;
+    background-color: yellow;
+}
+.container{
+    background-color: white;
+    position: absolute;
+    width: 90%;
+    height: 96%;
+    top: 2%;
+    border: solid 2px black;
+    border-radius: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+header{
+    position: relative;
+    top: 5%;
     font-size: 2rem;
     font-weight: bold;
-    font-family: monospace;
     text-align: center;
+
     background-color: rebeccapurple;
-    color: yellow;
     border: solid 2px black;
 
-    width: 50%;
+    width: 70%;
     border-radius: 10px;
 
     margin: auto;
     padding: 10px;
+}
+
+.tabs{
+    position: relative;
+    top:10%;
+    left: 0;
+    right: 0;
+    margin: auto;   
+    justify-items: center;
+}
+
+.btn{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    word-wrap: break-word;
+    font-family: monospace;
+    
+    border: solid 2px black;
+    box-shadow: 2px 2px 2px gray;
+    color: white;
+    background-color: red;
+    
+    width:30%;
+    border-radius: 5px;
+    padding: 15px 5px;
+    margin: auto;
+    margin-block: 1em;
+}
+
+.btn:hover{
+    background-color: yellow;
+    color: red;
+    cursor: pointer;
+}
+
+.btn:active{
+    transform: translate(1px,1px);
+    box-shadow: .5px .5px 1px black;
+}
+
+@media screen and (max-width:600px) {
+    header{
+        font-size: 1.1rem;
+    }
+
+    
+    .btn{
+        width: 63%;
+        font-size: .8rem;
+        padding: 8px 2px;
+    }
 }
