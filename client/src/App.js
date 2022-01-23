@@ -1,33 +1,41 @@
-import { useEffect, useState } from 'react';
-import { fetchData } from "./api"
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { AuthContainer } from './components/AuthContainer';
+
 
 function App() {
-  const routes = [
-    "/auth/login",
-    "/auth/signup",
-    "/home/dashboard",
-    "/home/settings",
-    "/home/settings/profile",
-  ]
-
-  const [message, setMessage] = useState("Token");
+  const [authContextValue, setAuthContextValue] = useState("Log In")
   return (
-    <div className="container">
-      <header>{message}</header>
-      <div className="tabs">
-        {
-          routes.map((route) => (
-            <div key={route} className='btn' onClick={
-              async () => {
-                const json = await fetchData(route);
-                setMessage(json.message)
-              }
-            }>{route}</div>
-          ))
-        }
-      </div>
+    <React.Fragment>
+      <header>
+        <Logo />
+        <HeaderBtn setAuthContextValue={setAuthContextValue} />
+      </header>
+      <section>
+        <AuthContainer type={authContextValue} />
+      </section>
+    </React.Fragment>
+  );
+}
 
+const Logo = () => {
+  return (
+    <div className="logo">
+      <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="logo" />
+    </div>
+  );
+}
+
+const HeaderBtn = ({ setAuthContextValue }) => {
+  return (
+    <div className="header-btn">
+      <button className="header-btn-login" onClick={() => {
+        const container = document.querySelector(".auth-container");
+        setAuthContextValue("Log In")
+      }}>Log In</button>
+      <button className="header-btn-register" onClick={() => {
+        setAuthContextValue("Sign Up")
+      }}>Sign Up</button>
     </div>
   );
 }
