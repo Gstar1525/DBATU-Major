@@ -5,7 +5,7 @@
 }
 
 body{
-    background-color: #eaf2f8;
+    background-color: #eafff6;
 }
 
 body button{
@@ -21,7 +21,7 @@ body button{
 }
 
 body button:hover{
-    background-color: #000097;
+    background-color: #009E5C;
     cursor: pointer;
 }
 
@@ -43,7 +43,7 @@ header{
 }
 
 .logo img{
-    height: 40px;
+    height: 45px;
 }
 
 .header-btn{

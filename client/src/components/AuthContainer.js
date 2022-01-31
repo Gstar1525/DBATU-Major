@@ -1,19 +1,58 @@
-import "./styles/authContainer-style.css" 
+import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { isLogged } from "../actions/isLogged";
+import { getAuth, login, signup } from "../api/auth";
+import "../styles/authContainer-style.css"
 
-export const AuthContainer = (props) => {
+const AuthContainer = ({ type }) => {
+  const isSignupContainer = type === "Sign Up";
+  const dispatch = useDispatch();
+
   return (
     <div className="auth-container">
-      <p>{props.type}</p>
-      <form action="POST">
+      <p>{type.toUpperCase()}</p>
+      <form onSubmit={isSignupContainer
+        ? async (event) => {
+          await signup(event)
+          onAuthStateChanged(getAuth(), (user) => {
+            dispatch(isLogged(user))
+          })
+        }
+        : async (event) => {
+          const success = await login(event)
+          dispatch(isLogged())
+        }}>
         <div className="input-auth-container">
-          <input required type="email" placeholder="Email" />
-          <input required type="password" placeholder="Password" />
-          {
-            (props.type === "Sign Up") ? <input required type="password" placeholder="Confirm Password" /> : <></>
-          }
-          <button type="submit" value="Login" >{props.type}</button>
+          <input required type="email" name="email" placeholder="Email" />
+          <input required type="password" name="password" placeholder="Password" />
+          {getConfirmPasswordInput(isSignupContainer)}
+          <button type="submit" value="Login" >{type}</button>
         </div>
       </form>
+
+      <p style={{ fontSize: "1.3rem" }} >
+        {getAuthLinks(isSignupContainer)}
+      </p>
     </div>
   );
 }
+
+
+const getConfirmPasswordInput = (isSignupContainer) => {
+  if (isSignupContainer) {
+    return <input required name="confirmPassword" type="password" placeholder="Confirm Password" />
+  } else {
+    return <></>
+  }
+}
+
+const getAuthLinks = (isSignupContainer) => {
+  if (isSignupContainer) {
+    return <> Already have account  <Link to="/">Log In</Link> </>
+  } else {
+    return <> Don't have account ? <Link to="/signup">Sign Up</Link> </>
+  }
+}
+
+export default AuthContainer;
