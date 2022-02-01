@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { isLogged } from "../actions/isLogged";
 import { getAuth, login, signup } from "../api/auth";
-import "../styles/authContainer-style.css"
+import "../styles/AuthContainer-style.css"
 
 const AuthContainer = ({ type }) => {
   const isSignupContainer = type === "Sign Up";
@@ -11,17 +11,19 @@ const AuthContainer = ({ type }) => {
 
   return (
     <div className="auth-container">
-      <p>{type.toUpperCase()}</p>
+      <p className="auth-container-title">{type.toUpperCase()}</p>
       <form onSubmit={isSignupContainer
         ? async (event) => {
-          await signup(event)
+          const success = await signup(event);
           onAuthStateChanged(getAuth(), (user) => {
-            dispatch(isLogged(user))
-          })
+            dispatch(isLogged(user));
+          });
         }
         : async (event) => {
-          const success = await login(event)
-          dispatch(isLogged())
+          const success = await login(event);
+          onAuthStateChanged(getAuth(), (user) => {
+            dispatch(isLogged(user));
+          });
         }}>
         <div className="input-auth-container">
           <input required type="email" name="email" placeholder="Email" />
@@ -31,7 +33,7 @@ const AuthContainer = ({ type }) => {
         </div>
       </form>
 
-      <p style={{ fontSize: "1.3rem" }} >
+      <p className="auth-link">
         {getAuthLinks(isSignupContainer)}
       </p>
     </div>

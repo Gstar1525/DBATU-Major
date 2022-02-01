@@ -7,7 +7,7 @@ const API_URL = "http://localhost:5000/api/v1";
 
 export const fetchData = async (routes) => {
     const res = await fetch(API_URL + routes)
-    return res.json();
+    return res.json()
 }
 
 export const login = async (event) => {
@@ -26,8 +26,10 @@ export const signup = async (event) => {
     const [email, password] = event.target;
     const userCredential = await signUpWithEmailAndPassword(auth, email.value, password.value);
     if (auth.currentUser) {
-        console.log(userCredential.user.email);
+        console.log(`LoggedIn as ${userCredential.user.email}`);
+        return true
     }
+    return false
 }
 
 export const getUser = () => {
