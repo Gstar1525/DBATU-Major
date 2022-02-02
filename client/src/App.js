@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import './styles/App.css';
 import { useSelector } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import {Logo} from './components';
+import { Logo } from './components';
 import { Dashboard, Login, Signup } from './screens';
 import { useDispatch } from 'react-redux';
 import { isLogged } from './actions/isLogged';
 import { getAuth } from './api/auth';
 import { onAuthStateChanged } from 'firebase/auth';
+import ProfileMenu from './components/ProfileMenu';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
     <React.Fragment>
       <header>
         <Logo />
+        {authUser ? <ProfileMenu/> : ""}
       </header>
       <Routes>
         <Route path="/" element={authUser

@@ -1,0 +1,13 @@
+.dashboard-container{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    margin-top: 6em;
+}
+
+.dashboard-title{
+    padding: 1em;
+}
