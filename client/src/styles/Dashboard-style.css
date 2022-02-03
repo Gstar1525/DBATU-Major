@@ -2,12 +2,47 @@
     position: absolute;
     left: 0;
     right: 0;
-    width: 50%;
+    width: 100%;
     text-align: center;
     margin: auto;
     margin-top: 6em;
 }
+.dashboard-container button{
+    position: relative;
+}
 
 .dashboard-title{
-    padding: 1em;
+    position: relative;
+    padding: 1em 0;
+}
+
+table{
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-collapse: collapse;
+    font-size: 1.5rem;
+    margin: 2em auto;
+    text-align: left;
+    width: 70%;
+    box-shadow: 2px 2px 3px #d3d3d3;
+}
+
+
+tr{
+    background-color: white;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+th{
+    background-color: #009E5C;
+    color: white;
+}
+th, td{
+    width: 8em;
+    text-align: center;
+    height: 2em;
 }

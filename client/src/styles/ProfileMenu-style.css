@@ -1,12 +1,9 @@
 .profile-menu{
-    position: absolute;
-    left: 85%;
-    text-align: right;
-    width: 10em;
+    position: relative;
+    margin: 0 5% 0 0;
 }
 
 .profile-menu img{
-
     width: 45px;
     background-color: black;
     border-radius: 50px;
@@ -35,4 +32,9 @@
 }
 .list-item:hover{
     background-color: #009E5C;
+}
+
+.list{
+    position: absolute;
+    right: 100%;
 }
