@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../api/firebase-service";
+import { getSlots } from "../api/solts";
 import "../styles/Dashboard-style.css"
 const Dashboard = () => {
+
+    const [data, setData] = useState([]);
+
+    const fetchSlots = async () => {
+        const json = await getSlots();
+        setData(json.solts);
+        }
+
+    useEffect(() => {
+        fetchSlots();
+    },[]);
+
     return (
         <div className="dashboard-container">
             <h1 className="dashboard-title">
@@ -16,26 +29,15 @@ const Dashboard = () => {
                         <th>Time</th>
                         <th>Available</th>
                     </tr>
-                    <tr>
-                        <td>1-2-2022</td>
-                        <td>10:00</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>1-2-2022</td>
-                        <td>10:00</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>1-2-2022</td>
-                        <td>10:00</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>1-2-2022</td>
-                        <td>10:00</td>
-                        <td>Yes</td>
-                    </tr>
+                    {
+                        data.map((row) => (
+                            <tr key={row.time}>
+                                <td>{row.date}</td>
+                                <td>{row.time}</td>
+                                <td>{row.isAvailable ? "Yes" : "No"}</td>
+                            </tr>
+                        ))
+                    }
                 </tbody>
 
             </table>

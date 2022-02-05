@@ -1,9 +1,9 @@
+import { API_URL } from "./apiConfig";
 import {
     auth,
     signInWithEmailAndPassword,
     signUpWithEmailAndPassword,
 } from "./firebase-service";
-const API_URL = "http://localhost:5000/api/v1";
 
 export const fetchData = async (routes) => {
     const res = await fetch(API_URL + routes)
@@ -38,4 +38,8 @@ export const getUser = () => {
 
 export const getAuth = () => {
     return auth;
+}
+
+export const checkIfAuthenticated = () => {
+    const userToken = auth.currentUser.getIdToken();
 }

@@ -5,15 +5,10 @@ const port = process.env.PORT || 5000;
 const morgan = require("morgan")
 const cors = require("cors")
 const helmet = require("helmet")
-const bodyParser = require("body-parser")
 const notFound = require("./middlewares/notFound")
 const errorHandler = require("./middlewares/errorHandler")
-const home = require("./routes/home")
-const auth = require("./routes/auth");
+const addslots = require("./routes/slots");
 const checkIfAuthenticated = require("./middlewares/auth");
-
-const jsonParser = bodyParser.json()
-
 
 app.use([
     morgan("common"),
@@ -21,12 +16,17 @@ app.use([
     cors({ origin: "http://localhost:3000" })
 ]);
 
-app.get("/", (req, res) => {
+// how to POST body from client to server !!
+// use express.json().
+// JSON.stringfy the body.
+// POST "Content-Type": "application/json" Header from client.
+app.use(express.json());
+
+app.get("/", (_, res) => {
     res.json({ success: true, message: "hello world 🌍" });
 })
 
-app.use("/api/v1/auth", jsonParser, auth);
-app.use("/api/v1/home", checkIfAuthenticated, home);
+app.use("/api/v1", checkIfAuthenticated, addslots);
 app.use(notFound);
 app.use(errorHandler);
 
