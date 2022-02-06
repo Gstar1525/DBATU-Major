@@ -26,7 +26,7 @@ app.get("/", (_, res) => {
     res.json({ success: true, message: "hello world 🌍" });
 })
 
-app.use("/api/v1", checkIfAuthenticated, addslots);
+app.use("/api/v1", addslots);
 app.use(notFound);
 app.use(errorHandler);
 

@@ -1,49 +1,18 @@
-const data = [
-    {
-        date: "05-02-2022",
-        time: "10:00",
-        isAvailable: true
-    },
-    {
-        date: "05-02-2022",
-        time: "11:00",
-        isAvailable: false
-    },
-    {
-        date: "05-02-2022",
-        time: "12:00",
-        isAvailable: true
-    },
-    {
-        date: "05-02-2022",
-        time: "13:00",
-        isAvailable: false
-    },
-    {
-        date: "05-02-2022",
-        time: "14:00",
-        isAvailable: false
-    },
-    {
-        date: "05-02-2022",
-        time: "14:30",
-        isAvailable: false
-    },
-    {
-        date: "05-02-2022",
-        time: "15:00",
-        isAvailable: false
-    },
-    {
-        date: "05-02-2022",
-        time: "16:00",
-        isAvailable: false
-    }
-]
+const { Slot } = require("../model/slot");
+const { db } = require("../model/db");
 
 const addslots = (req, res) => {
-    console.log(req.body);
-    res.json({ success: true, solts: data })
+    res.json({ success: true, slots: data })
 }
 
-module.exports = { addslots }
+const insertSlots = async (req, res) => {
+    const data = req.body;
+    const slot = {
+        date : data.date,
+        time : data.time,
+        isAvailable : data.isAvailable
+    }
+    const newDoc = await db.collection("slots").add(slot);
+    res.status(201).send(`Created a new slot: ${newDoc.id}`);    
+}
+module.exports = { addslots, insertSlots }

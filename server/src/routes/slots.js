@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { addslots } = require("../controllers/slots")
+const { addslots, insertSlots } = require("../controllers/slots")
 
-router.post("/getslots", addslots);
+router.post("/slots", insertSlots);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { auth } from "../api/firebase-service";
-import { getSlots } from "../api/solts";
+import { getSlots } from "../api/slots";
 import "../styles/Dashboard-style.css"
 const Dashboard = () => {
 
@@ -8,7 +8,7 @@ const Dashboard = () => {
 
     const fetchSlots = async () => {
         const json = await getSlots();
-        setData(json.solts);
+        setData(json.slots);
         }
 
     useEffect(() => {
