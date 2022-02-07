@@ -9,8 +9,7 @@ class Slot {
 }
 
 const createSlot = async (date, time, isAvailable) => {
-    const slot = new Slot(date, time, isAvailable)
-    return await db.collection("slots").add({ ...slot });
+    return await db.collection("slots").add({ date, time, isAvailable });
 }
 
 module.exports = {
