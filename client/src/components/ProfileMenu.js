@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { auth } from "../api/firebase-service";
 import "../styles/ProfileMenu-style.css"
 
-const ProfileMenu = () => {
+const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
 
     const [profileMenu, setProfileMenu] = useState(false);
 
     const profileOnClick = () => {
-        console.log("Progile Clicked");
         setProfileMenu(!profileMenu)
     }
 
@@ -26,8 +26,13 @@ const ProfileMenu = () => {
                     profileMenu
                         ? <div className="list">
                             <div onClick={itemOnClick} className="list-item">Profile</div>
-                            <div onClick={itemOnClick} className="list-item">Setting</div>
-                            <div onClick={itemOnClick} className="list-item">Logout</div>
+                            <div onClick={() => {
+                                setIsCustomer(!isCustomer)
+                                setProfileMenu(!profileMenu)
+                            }} className="list-item">
+                                {isCustomer ? "C" : "B"}
+                            </div>
+                            <div onClick={async () => { await auth.signOut() }} className="list-item">Logout</div>
                         </div>
                         : null
                 }

@@ -1,15 +1,13 @@
-import { getAuth } from "../api/auth";
-
-const loggedInReducer = (state = null, action) => {
+const userReducer = (_, action) => {
     switch (action.type) {
         case "ISLOGGED":
             if (action.payload) {
                 return action.payload;
             }
             return null;
-        default:
+        default:    
             return null;
     }
 }
 
-export default loggedInReducer;
+export default userReducer;

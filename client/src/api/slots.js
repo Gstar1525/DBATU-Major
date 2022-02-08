@@ -18,3 +18,16 @@ export const createSlot = async (date, time, isAvailable) => {
     })
     return response.json();
 }
+
+export const readAllSlot = async (date, time, isAvailable) => {
+    const token = await auth.currentUser.getIdToken()
+    const response = await fetch(`${API_URL}/slots`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+        },
+        method: "GET",
+    })
+    return response.json();
+}

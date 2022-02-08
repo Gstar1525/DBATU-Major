@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import { useSelector } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
@@ -12,8 +12,11 @@ import ProfileMenu from './components/ProfileMenu';
 
 function App() {
 
-  const authUser = useSelector(state => state.isLogged)
+  const authUser = useSelector(state => state.userReducer)
   const dispatch = useDispatch();
+
+  // TODO : get User Role state from firebase  
+  const [isCustomer, setIsCustomer] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(getAuth(), (user) => {
@@ -25,7 +28,7 @@ function App() {
     <React.Fragment>
       <header>
         <Logo />
-        {authUser ? <ProfileMenu/> : ""}
+        {authUser ? <ProfileMenu isCustomer={isCustomer} setIsCustomer={setIsCustomer} /> : ""}
       </header>
       <Routes>
         <Route path="/" element={authUser
@@ -39,7 +42,7 @@ function App() {
         />
 
         <Route path="/dashboard" element={authUser
-          ? <Dashboard />
+          ? <Dashboard isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
           : <Navigate to="/" replace={true} />}
         />
       </Routes>
