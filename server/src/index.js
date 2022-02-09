@@ -8,6 +8,8 @@ const helmet = require("helmet")
 const notFound = require("./middlewares/notFound")
 const errorHandler = require("./middlewares/errorHandler")
 const slots = require("./routes/slots");
+const users = require("./routes/users");
+
 const checkIfAuthenticated = require("./middlewares/auth");
 
 app.use([
@@ -26,7 +28,8 @@ app.get("/", (_, res) => {
     res.json({ success: true, message: "hello world 🌍" });
 })
 
-app.use("/api/v1",   slots);
+app.use("/api/v1", [slots, users]);
+
 app.use(notFound);
 app.use(errorHandler);
 

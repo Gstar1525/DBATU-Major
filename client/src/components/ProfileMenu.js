@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../api/firebase-service";
+import { readUserRole, updateUserRole } from "../api/users";
 import "../styles/ProfileMenu-style.css"
 
 const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
@@ -15,6 +16,11 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
         setProfileMenu(!profileMenu)
     }
 
+    const getUserRole = async () => {
+        const userRole = await readUserRole();
+        setIsCustomer(userRole.isCustomer);
+        return userRole.isCustomer;
+    }
 
     return (
         <React.Fragment>
@@ -26,11 +32,16 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
                     profileMenu
                         ? <div className="list">
                             <div onClick={itemOnClick} className="list-item">Profile</div>
-                            <div onClick={() => {
-                                setIsCustomer(!isCustomer)
+                            <div onClick={async () => {
+                                const userRole = await getUserRole();
+                                console.log(userRole);
+                                await updateUserRole(!userRole)
+                                setIsCustomer(!userRole)
                                 setProfileMenu(!profileMenu)
                             }} className="list-item">
-                                {isCustomer ? "C" : "B"}
+                                {isCustomer
+                                    ? "Change to Business"
+                                    : "Change to Customer"}
                             </div>
                             <div onClick={async () => { await auth.signOut() }} className="list-item">Logout</div>
                         </div>

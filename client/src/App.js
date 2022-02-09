@@ -9,6 +9,7 @@ import { isLogged } from './actions/isLogged';
 import { getAuth } from './api/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import ProfileMenu from './components/ProfileMenu';
+import { readUserRole } from './api/users';
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
 
   // TODO : get User Role state from firebase  
-  const [isCustomer, setIsCustomer] = useState(false);
+  const [isCustomer, setIsCustomer] = useState();
 
   useEffect(() => {
     onAuthStateChanged(getAuth(), (user) => {

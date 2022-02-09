@@ -5,6 +5,8 @@ import {
     signUpWithEmailAndPassword,
 } from "./firebase-service";
 
+import { createUser } from "./users";
+
 export const fetchData = async (routes) => {
     const res = await fetch(API_URL + routes)
     return res.json()
@@ -26,7 +28,9 @@ export const signup = async (event) => {
     const [email, password] = event.target;
     const userCredential = await signUpWithEmailAndPassword(auth, email.value, password.value);
     if (auth.currentUser) {
-        console.log(`LoggedIn as ${userCredential.user.email}`);
+        const uid = userCredential.user.uid;
+        await createUser(uid, true);
+        console.log(`LoggedIn as ${JSON.stringify(userCredential.user.email)}`);
         return true
     }
     return false
@@ -38,8 +42,4 @@ export const getUser = () => {
 
 export const getAuth = () => {
     return auth;
-}
-
-export const checkIfAuthenticated = () => {
-    const userToken = auth.currentUser.getIdToken();
 }

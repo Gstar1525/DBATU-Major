@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createRef } from "react";
 import { auth } from "../api/firebase-service";
 import { createSlot, readAllSlot } from "../api/slots";
+import { readUserRole } from "../api/users";
 import "../styles/Dashboard-style.css"
 const Dashboard = ({ isCustomer, setIsCustomer }) => {
     const [showInputRow, setShowInputRow] = useState(false);
@@ -16,8 +17,15 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
     }, [])
 
     const getAllSlots = async () => {
+        await getUserRole();
         const allSlots = await readAllSlot()
         setData([...data, ...allSlots.allSlots])
+    }
+
+    const getUserRole = async () => {
+        const userRole = await readUserRole();
+        setIsCustomer(userRole.isCustomer);
+        console.log(userRole);
     }
 
     const addSlot = async () => {
