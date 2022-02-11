@@ -1,5 +1,4 @@
 const { db } = require("../model/db");
-const { admin } = require("../firebase-service.js")
 
 const createUser = async (uid, isCustomer) => {
     const docRef = await db.collection("users-slots").add({ uid, isCustomer });
@@ -21,13 +20,14 @@ const readUsersDoc = async (docRefID) => {
 }
 
 const readUserRole = async (uid) => {
-    const users = await db.collection("users-slots").where("uid", "==", `${uid}`).get();
-    let docRef = "";
+    const users = await db.collection("users-slots").where("uid", "==", uid).get();
+    const dc = {
+        data: ""
+    }
     users.forEach(doc => {
-        docRef = doc.ref
+        dc.data = doc.data();
     })
-    const doc = await readUsersDoc(docRef.id);
-    return doc.isCustomer;
+    return dc.data.isCustomer;
 }
 
 module.exports = {

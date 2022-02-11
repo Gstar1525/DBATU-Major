@@ -17,7 +17,6 @@ export const login = async (event) => {
     const [email, password] = event.target;
     const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
     if (userCredential.user) {
-        console.log(`LoggedIn as ${userCredential.user.email}`);
         return true
     }
     return false
@@ -29,8 +28,7 @@ export const signup = async (event) => {
     const userCredential = await signUpWithEmailAndPassword(auth, email.value, password.value);
     if (auth.currentUser) {
         const uid = userCredential.user.uid;
-        await createUser(uid, true);
-        console.log(`LoggedIn as ${JSON.stringify(userCredential.user.email)}`);
+        const user = await createUser(uid, true);
         return true
     }
     return false

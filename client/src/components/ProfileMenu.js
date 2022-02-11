@@ -12,7 +12,6 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
     }
 
     const itemOnClick = () => {
-        console.log("Item Clicked");
         setProfileMenu(!profileMenu)
     }
 
@@ -34,7 +33,6 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
                             <div onClick={itemOnClick} className="list-item">Profile</div>
                             <div onClick={async () => {
                                 const userRole = await getUserRole();
-                                console.log(userRole);
                                 await updateUserRole(!userRole)
                                 setIsCustomer(!userRole)
                                 setProfileMenu(!profileMenu)

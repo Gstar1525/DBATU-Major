@@ -25,7 +25,6 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
     const getUserRole = async () => {
         const userRole = await readUserRole();
         setIsCustomer(userRole.isCustomer);
-        console.log(userRole);
     }
 
     const addSlot = async () => {

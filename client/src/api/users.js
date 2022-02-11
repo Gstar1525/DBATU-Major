@@ -2,17 +2,22 @@ import { API_URL } from "./apiConfig"
 import { auth } from "./firebase-service";
 
 export const createUser = async (uid, isCustomer) => {
-    const token = await auth.currentUser.getIdToken()
-    const response = await fetch(`${API_URL}/users`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({ uid, isCustomer }),
-        method: "POST",
-    })
-    return response.json();
+
+    try {
+        const token = await auth.currentUser.getIdToken()
+        const response = await fetch(`${API_URL}/users`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ uid, isCustomer }),
+            method: "POST",
+        })
+        return response.json();
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export const updateUserRole = async (isCustomer) => {
@@ -31,17 +36,21 @@ export const updateUserRole = async (isCustomer) => {
 
 export const readUserRole = async () => {
     if (auth.currentUser) {
-        const token = await auth.currentUser.getIdToken()
-        const response = await fetch(`${API_URL}/get-role`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ "uid": auth.currentUser.uid }),
-            method: "POST",
-        })
-        return response.json();
+        try {
+            const token = await auth.currentUser.getIdToken()
+            const response = await fetch(`${API_URL}/get-role`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ "uid": auth.currentUser.uid }),
+                method: "POST",
+            })
+            return response.json();
+        } catch (error) {
+            console.log(error);
+        }
     }
     return undefined
 }
