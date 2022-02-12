@@ -8,7 +8,6 @@ const createSlot = async (date, time, isAvailable, uid) => {
     const data = await get.data();
     return data;
 
-
     // const slot = await db.collection("slots").add({ date, time, isAvailable });
     // const data = await readSlot(slot.id);
     // return data

@@ -20,7 +20,7 @@ export const createUser = async (uid, isCustomer) => {
     }
 }
 
-export const updateUserRole = async (isCustomer) => {
+export const updateUserRole = async (isCustomer, uid) => {
     const token = await auth.currentUser.getIdToken()
     const response = await fetch(`${API_URL}/users`, {
         headers: {
@@ -28,13 +28,13 @@ export const updateUserRole = async (isCustomer) => {
             "Content-Type": "application/json",
             'Accept': 'application/json',
         },
-        body: JSON.stringify({ "uid": auth.currentUser.uid, isCustomer }),
+        body: JSON.stringify({ "uid": uid, isCustomer }),
         method: "PUT",
     })
     return response.json();
 }
 
-export const readUserRole = async () => {
+export const readUserRole = async (uid) => {
     if (auth.currentUser) {
         try {
             const token = await auth.currentUser.getIdToken()
@@ -44,7 +44,7 @@ export const readUserRole = async () => {
                     "Content-Type": "application/json",
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify({ "uid": auth.currentUser.uid }),
+                body: JSON.stringify({ "uid": uid }),
                 method: "POST",
             })
             return response.json();

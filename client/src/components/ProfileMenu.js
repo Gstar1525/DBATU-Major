@@ -16,7 +16,7 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
     }
 
     const getUserRole = async () => {
-        const userRole = await readUserRole();
+        const userRole = await readUserRole(auth.currentUser.uid);
         setIsCustomer(userRole.isCustomer);
         return userRole.isCustomer;
     }
@@ -33,7 +33,7 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
                             <div onClick={itemOnClick} className="list-item">Profile</div>
                             <div onClick={async () => {
                                 const userRole = await getUserRole();
-                                await updateUserRole(!userRole)
+                                await updateUserRole(!userRole, auth.currentUser.uid)
                                 setIsCustomer(!userRole)
                                 setProfileMenu(!profileMenu)
                             }} className="list-item">

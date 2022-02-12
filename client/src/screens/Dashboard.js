@@ -18,12 +18,12 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
 
     const getAllSlots = async () => {
         await getUserRole();
-        const allSlots = await readAllSlot()
+        const allSlots = await readAllSlot(auth.currentUser.uid)
         setData([...data, ...allSlots.allSlots])
     }
 
     const getUserRole = async () => {
-        const userRole = await readUserRole();
+        const userRole = await readUserRole(auth.currentUser.uid);
         setIsCustomer(userRole.isCustomer);
     }
 
@@ -49,33 +49,35 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
             <h1 className="dashboard-title">
                 {`Welcome ${auth.currentUser.email || " "}`}
             </h1>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Available</th>
-                    </tr>
-                    {
-                        data.map((slot, index) => (
-                            <tr key={index}>
-                                <td>{slot.date}</td>
-                                <td>{slot.time}</td>
-                                <td>{slot.isAvailable}</td>
-                            </tr>
-                        ))
-                    }
-                    <tr style={{ display: (showInputRow && isCustomer === false) ? "" : "none" }}>
-                        <td><input required ref={dateRef} placeholder="date" type="date" /></td>
-                        <td><input required ref={timeRef} placeholder="time" type="time" /></td>
-                        <td><input required ref={availableRef} placeholder="available" type="checkbox" /></td>
-                    </tr>
-                </tbody>
-            </table>
-            {(isCustomer === false) ? <div className="btn-add-slot">
-                {btnText ? <button onClick={onCancel}>Cancel</button> : ""}
-                <button onClick={addSlot}>{btnText ? "Submit" : "Add"}</button>
-            </div> : ""}
+            {isCustomer ? "" : <>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Available</th>
+                        </tr>
+                        {
+                            data.map((slot, index) => (
+                                <tr key={index}>
+                                    <td>{slot.date}</td>
+                                    <td>{slot.time}</td>
+                                    <td>{slot.isAvailable}</td>
+                                </tr>
+                            ))
+                        }
+                        <tr style={{ display: (showInputRow && isCustomer === false) ? "" : "none" }}>
+                            <td><input required ref={dateRef} placeholder="date" type="date" /></td>
+                            <td><input required ref={timeRef} placeholder="time" type="time" /></td>
+                            <td><input required ref={availableRef} placeholder="available" type="checkbox" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="btn-add-slot">
+                    {btnText ? <button onClick={onCancel}>Cancel</button> : ""}
+                    <button onClick={addSlot}>{btnText ? "Submit" : "Add"}</button>
+                </div>
+            </>}
         </div>
     );
 }
