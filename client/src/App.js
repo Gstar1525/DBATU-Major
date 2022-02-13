@@ -30,7 +30,8 @@ function App() {
     <React.Fragment>
       <header>
         <Logo />
-        {authUser ? <ProfileMenu isCustomer={isCustomer} setIsCustomer={setIsCustomer} /> : ""}
+        {authUser ?
+          <SearchAndProfile isCustomer={isCustomer} setIsCustomer={setIsCustomer} /> : ""}
       </header>
       <Routes>
         <Route path="/" element={authUser
@@ -54,6 +55,15 @@ function App() {
       </Routes>
     </React.Fragment>
   );
+}
+
+function SearchAndProfile({ isCustomer, setIsCustomer }) {
+  return (
+    <div className="search-profile">
+      <input type="text" placeholder='search and book your slot' />
+      <ProfileMenu isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
+    </div>
+  )
 }
 
 export default App;
