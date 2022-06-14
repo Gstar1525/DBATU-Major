@@ -5,25 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { isLogged } from "../actions/isLogged";
 import { getAuth } from "../api/auth";
+import { getBusinessesByUid } from "../api/businesses";
 import { auth } from "../api/firebase-service";
 import { createSlot, readAllSlot } from "../api/slots";
 import { readUserRole } from "../api/users";
 import "../styles/Dashboard-style.css"
+
 const BookSlots = ({ isCustomer, setIsCustomer }) => {
     const [showInputRow, setShowInputRow] = useState(false);
     const [btnText, setBtnText] = useState(false);
     const [data, setData] = useState([]);
+    const [businessName, setBusinessName] = useState("")
     const dateRef = createRef();
     const timeRef = createRef();
     const availableRef = createRef();
-
     const { uid } = useParams()
     const dispatch = useDispatch();
     const authUser = useSelector(state => state.userReducer)
 
-
     useEffect(() => {
-        console.log(uid);
+        getBusiness();
         getAllSlots();
     }, [])
 
@@ -32,6 +33,11 @@ const BookSlots = ({ isCustomer, setIsCustomer }) => {
             dispatch(isLogged(user))
         })
     }, [authUser]);
+
+    const getBusiness = async () => {
+        const business = await getBusinessesByUid(uid);
+        setBusinessName(business[0].email)
+    }
 
     const getAllSlots = async () => {
         // await getUserRole();
@@ -64,7 +70,7 @@ const BookSlots = ({ isCustomer, setIsCustomer }) => {
     return (
         <div className="dashboard-container">
             <h1 className="dashboard-title">
-                {`Book slot at ${uid} `}
+                {`Book slot at ${businessName} `}
             </h1>
             <table>
                 <tbody>
@@ -80,7 +86,7 @@ const BookSlots = ({ isCustomer, setIsCustomer }) => {
                                 <td>{slot.time}</td>
                                 <td>{
 
-                                    (slot.isAvailable === "true") ? <button style={{height: "40px"}}>Book</button> : "Booked"
+                                    (slot.isAvailable === "true") ? <button style={{ height: "40px" }}>Book</button> : "Booked"
 
                                 }</td>
                             </tr>

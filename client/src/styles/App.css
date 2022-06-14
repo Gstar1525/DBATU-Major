@@ -39,12 +39,12 @@ header{
 }
 
 .logo{
-    margin: 0 10%;
-    /* border: solid 2px magenta; */
-
+    width: 50%;
 }
 
 .logo img{
+    position: relative;
+    left: 10%;
     height: 45px;
 }
 
@@ -64,15 +64,15 @@ section{
     display: flex;
     width: 30%;
     justify-content: space-between;
-    /* border: solid 2px red; */
 }
 
-.search-profile input{
-    width: 70%;
-    padding: 10px;
+.search-profile-container{
+    display: flex;
+    width: 50%;
+    justify-content: right;
 }
-
-.search-profile input:focus{
-    outline: none;
-    border: solid  #007c48;
+.search-profile{
+    display: flex;
+    width: 40%;
+    justify-content: space-evenly;
 }

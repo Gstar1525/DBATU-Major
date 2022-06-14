@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import { useSelector } from 'react-redux';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, Link } from 'react-router-dom';
 import { Logo } from './components';
 import { Dashboard, Login, Signup, BookSlots } from './screens';
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import ProfileMenu from './components/ProfileMenu';
 import { readUserRole } from './api/users';
 import { auth } from './api/firebase-service';
+import Search from './screens/Search';
 
 function App() {
 
@@ -39,6 +40,8 @@ function App() {
           : <Login />}
         />
 
+        <Route path='/search' element={<Search />} />
+
         <Route path="/signup" element={authUser
           ? <Navigate to="/dashboard" replace={true} />
           : <Signup />}
@@ -59,9 +62,13 @@ function App() {
 
 function SearchAndProfile({ isCustomer, setIsCustomer }) {
   return (
-    <div className="search-profile">
-      <input type="text" placeholder='search and book your slot' />
-      <ProfileMenu isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
+    <div className="search-profile-container">
+      <div className="search-profile">
+        <Link to="/search"><button>
+          Search
+        </button></Link>
+        <ProfileMenu isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
+      </div>
     </div>
   )
 }

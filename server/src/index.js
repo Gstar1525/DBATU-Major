@@ -9,6 +9,7 @@ const notFound = require("./middlewares/notFound")
 const errorHandler = require("./middlewares/errorHandler")
 const slots = require("./routes/slots");
 const users = require("./routes/users");
+const businesses = require("./routes/businesses");
 
 const checkIfAuthenticated = require("./middlewares/auth");
 
@@ -28,7 +29,7 @@ app.get("/", (_, res) => {
     res.json({ success: true, message: "hello world 🌍" });
 })
 
-app.use("/api/v1", [slots, users]);
+app.use("/api/v1", [slots, users, businesses]);
 
 app.use(notFound);
 app.use(errorHandler);

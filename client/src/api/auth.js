@@ -34,7 +34,7 @@ export const signup = async (event) => {
     return false
 }
 
-export const getUser = () => {
+export const getCurrentUser = () => {
     return auth.currentUser;
 }
 
