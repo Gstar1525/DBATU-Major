@@ -1,4 +1,4 @@
-const { createSlot, readAllSlots } = require("../model/Slot");
+const { createSlot, readAllSlots, updateSlot } = require("../model/Slot");
 
 const postSlots = async (req, res) => {
     const { date, time, isAvailable, uid } = req.body;
@@ -8,7 +8,12 @@ const postSlots = async (req, res) => {
 
 const getSlots = async (req, res) => {
     const allSlots = await readAllSlots(req.body.uid);
-    res.status(201).json({ allSlots });
+    res.status(201).json(allSlots);
 }
 
-module.exports = { postSlots, getSlots }
+const putSlot = async (req, res) => {
+    const slots = await updateSlot(req.body.uid, req.body.slotId, req.body.data);
+    res.status(201).json(slots);    
+}
+
+module.exports = { postSlots, getSlots, putSlot }

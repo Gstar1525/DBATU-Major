@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { isLogged } from "../actions/isLogged";
 import { getAuth } from "../api/auth";
+import { Slot } from "../components";
 import { getBusinessesByUid } from "../api/businesses";
 import { auth } from "../api/firebase-service";
 import { createSlot, readAllSlot } from "../api/slots";
@@ -14,7 +15,7 @@ import "../styles/Dashboard-style.css"
 const BookSlots = ({ isCustomer, setIsCustomer }) => {
     const [showInputRow, setShowInputRow] = useState(false);
     const [btnText, setBtnText] = useState(false);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const [businessName, setBusinessName] = useState("")
     const dateRef = createRef();
     const timeRef = createRef();
@@ -40,9 +41,9 @@ const BookSlots = ({ isCustomer, setIsCustomer }) => {
     }
 
     const getAllSlots = async () => {
-        // await getUserRole();
         const allSlots = await readAllSlot(uid)
-        setData([...data, ...allSlots.allSlots])
+        // console.log(allSlots);
+        setData(allSlots)
     }
 
     const getUserRole = async () => {
@@ -80,16 +81,8 @@ const BookSlots = ({ isCustomer, setIsCustomer }) => {
                         <th>Available</th>
                     </tr>
                     {
-                        data.map((slot, index) => (
-                            <tr key={index}>
-                                <td>{slot.date}</td>
-                                <td>{slot.time}</td>
-                                <td>{
-
-                                    (slot.isAvailable === "true") ? <button style={{ height: "40px" }}>Book</button> : "Booked"
-
-                                }</td>
-                            </tr>
+                        Object.entries(data).map(slot => (
+                            <Slot key={slot[0]} data={slot} uid={uid} />
                         ))
                     }
                 </tbody>
@@ -98,3 +91,4 @@ const BookSlots = ({ isCustomer, setIsCustomer }) => {
     );
 }
 export default BookSlots;
+

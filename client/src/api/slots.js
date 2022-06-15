@@ -35,3 +35,16 @@ export const readAllSlot = async (uid) => {
     })
     return response.json();
 }
+
+export const updateSlot = async (data) => {
+    const token = await auth.currentUser.getIdToken()
+    const response = await fetch(`${API_URL}/put-slot`, {
+        headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+        method: "PUT",
+    })
+    return response.json();
+}

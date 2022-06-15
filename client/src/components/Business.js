@@ -3,10 +3,6 @@ import { Link } from "react-router-dom"
 
 export const Business = ({ email, uid }) => {
 
-    useEffect(() => {
-
-    }, [])
-
     const style = {
         margin: "auto",
         textAlign: "center",
