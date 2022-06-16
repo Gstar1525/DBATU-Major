@@ -1,0 +1,47 @@
+[role="tooltip"].popup-content {
+  width: 50%;
+  height: 60%;
+}
+
+[data-popup="tooltip"].popup-overlay {
+  background: rgba(0, 0, 0, 0.527);
+}
+
+.udpateForm{
+    display: block;
+    position: relative;
+    top: 5%;
+    height: 90%;
+    width: 100%;
+    text-align: center;
+}
+
+.udpateForm div{
+    display: grid;
+    width: 70%;
+    margin: auto;
+    margin-top: 2em;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.udpateForm label{
+    text-decoration: underline;
+
+}
+
+.udpateForm input{
+    height: 1em;
+    font-size: 1.2rem;
+    margin: .5em 0;
+    padding: 10px;
+}
+
+.udpateForm input:focus{
+    outline: none;
+    border-color: black;
+}
+
+.udpateForm button{
+    margin-top: 2em;
+}

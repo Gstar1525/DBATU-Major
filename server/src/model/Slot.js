@@ -5,7 +5,9 @@ const createSlot = async (date, time, isAvailable, uid) => {
     const slotsDocRef = usersSlots.docs[0].ref.collection("slots").add({ date, time, isAvailable })
     const get = await (await slotsDocRef).get()
     const data = await get.data();
-    return data;
+    const response = {};
+    response[get.id] = data;
+    return response;
 }
 
 const readAllSlots = async (uid) => {
@@ -25,8 +27,16 @@ const updateSlot = async (uid, slotId, data) => {
     return slots;
 }
 
+const deleteSlot = async (uid, slotId) => {
+    const slots = await readAllSlots(uid);
+    const userSlotsCollection = await db.collection("users-slots").where("uid", "==", `${uid}`).get();
+    await userSlotsCollection.docs[0].ref.collection("slots").doc(slotId).delete();
+    return slots;
+}
+
 module.exports = {
     createSlot,
     readAllSlots,
-    updateSlot
+    updateSlot,
+    deleteSlot
 }

@@ -1,55 +1,77 @@
-.dashboard-container{
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 70%;
-    text-align: center;
-    margin: auto;
-    margin-top: 6em;
-}
-.dashboard-container button{
-    position: relative;
+.dashboard-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+  margin-top: 6em;
 }
 
-.dashboard-title{
-    position: relative;
-    padding: 1em 0;
+.dashboard-container button {
+  position: relative;
 }
 
-table{
-    position: relative;
-    left: 0;
-    right: 0;
-    margin: auto;
-    border-collapse: collapse;
-    font-size: 1.5rem;
-    margin: 2em auto;
-    text-align: left;
-    width: 100%;
-    box-shadow: 2px 2px 3px #d3d3d3;
+.dashboard-title {
+  position: relative;
+  padding: 1em 0;
 }
 
+table {
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-collapse: collapse;
+  font-size: 1.5rem;
+  margin: 2em auto;
+  text-align: left;
+  width: 100%;
+  box-shadow: 2px 2px 3px #d3d3d3;
+  background-color: white;
+}
 
-tr{
-    background-color: white;
+.action-col, .action {
+    width: 7em !important;
+}
+
+.action-btn{
+    display: flex;
+    justify-content: center;
+}
+
+.action-btn button{
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+}
+
+tr {
+  background-color: white;
 }
 
 tr:hover {
-    background-color: #ddd;
-}
-th{
-    background-color: #009E5C;
-    color: white;
-}
-th, td{
-    width: 8em;
-    text-align: center;
-    height: 2em;
+  background-color: #ddd;
 }
 
-.btn-add-slot{
-    margin: 1em 0;
-    text-align: right;
-    width: 100%;   
+th {
+  background-color: #009e5c;
+  color: white;
+  height: 2em;
 }
 
+td{
+  height: 2.5em;
+}
+
+th,
+td {
+  width: 8em;
+  text-align: center;
+}
+
+.btn-add-slot {
+  margin: 1em 0;
+  text-align: right;
+  width: 100%;
+}

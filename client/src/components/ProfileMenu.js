@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { auth } from "../api/firebase-service";
 import { readUserRole, updateUserRole } from "../api/users";
 import "../styles/ProfileMenu-style.css"

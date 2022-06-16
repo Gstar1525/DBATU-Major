@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updateSlot } from "../api/slots";
 import { Link } from "react-router-dom"
 
@@ -8,9 +8,14 @@ const Slot = ({ data, uid }) => {
         height: "30px",
         width: "70px"
     };
-
     const slot = data[1]
     const slotId = data[0]
+
+    const [available, setAvailable] = useState(slot.isAvailable);
+
+    useEffect(() => {
+        console.log(slot.time, slot.isAvailable);
+    }, [])
 
     const bookSlot = async (event) => {
         slot.isAvailable = false;
@@ -20,6 +25,7 @@ const Slot = ({ data, uid }) => {
             data: slot
         }
         await updateSlot(body);
+        setAvailable(slot.isAvailable);
     }
 
     return (
@@ -28,7 +34,7 @@ const Slot = ({ data, uid }) => {
             <td>{slot.time}</td>
             <td>
                 {
-                    (slot.isAvailable === "true")
+                    (available === true)
                         ?
                         <Link to={`/u/${uid}`}>
                             <button onClick={bookSlot} style={style}>Book</button>

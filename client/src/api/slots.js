@@ -12,7 +12,7 @@ export const createSlot = async (date, time, isAvailable) => {
         body: JSON.stringify({
             date: `${date}`,
             time: `${time}`,
-            isAvailable: `${isAvailable}`,
+            isAvailable: isAvailable,
             uid: auth.currentUser.uid
         }),
         method: "POST",
@@ -45,6 +45,19 @@ export const updateSlot = async (data) => {
         },
         body: JSON.stringify(data),
         method: "PUT",
+    })
+    return response.json();
+}
+
+export const deleteSlot = async (data) => {
+    const token = await auth.currentUser.getIdToken()
+    const response = await fetch(`${API_URL}/delete-slot`, {
+        headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+        method: "DELETE",
     })
     return response.json();
 }
