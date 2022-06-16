@@ -31,9 +31,24 @@ npm run start
 
 ## API routes
 
-- slots (get, post) - ``` /api/v1/slots ```
-- users (post, put) - ``` /api/v1/users ```
-- get role (post) - ``` /api/v1/get-role ```
+- slots
+    - create slot (post) - ``` /api/v1/slots ```
+    - read slots (post) - ``` /api/v1/get-slots ```
+    - update slot (put) - ``` /api/v1/put-slot ```
+    - delete slot (delete) - ``` /api/v1/delete-slot ```
+
+</br>
+
+- users 
+    - create user (post) - ``` /api/v1/users ```
+    - update user role (put) - ``` /api/v1/users ```
+    - read user role (post) - ``` /api/v1/get-role ```
+
+</br>
+
+- businesses 
+    - read businesses (get) - ``` /get-businesses ```
+    - read businesses by id (post) - ``` /get-businesses-by-id ```
 
 ## Client URLs
 
@@ -41,3 +56,4 @@ npm run start
 - signup - ``` /signup ```
 - dashboard - ``` /dashboard ```
 - bookslots - ``` /u/[user_id] ```
+- search - ``` /search ```
