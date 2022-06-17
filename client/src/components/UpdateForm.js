@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import 'reactjs-popup/dist/index.css';
+import "../styles/UpdateSlotStyle.css"
 import { updateSlot } from "../api/slots";
 
 const UpdateForm = ({ date, time, isAvailable, body }) => {

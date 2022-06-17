@@ -2,10 +2,10 @@ import { API_URL } from "./apiConfig"
 import { auth } from "./firebase-service";
 
 export const createSlot = async (date, time, isAvailable) => {
-    const token = await auth.currentUser.getIdToken()
+    // const token = await auth.currentUser.getIdToken()
     const response = await fetch(`${API_URL}/slots`, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
             'Accept': 'application/json',
         },
@@ -37,9 +37,10 @@ export const readAllSlot = async (uid) => {
 }
 
 export const updateSlot = async (data) => {
-    const token = await auth.currentUser.getIdToken()
+    // const token = await auth.currentUser.getIdToken()
     const response = await fetch(`${API_URL}/put-slot`, {
         headers: {
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
             'Accept': 'application/json',
         },
@@ -50,14 +51,29 @@ export const updateSlot = async (data) => {
 }
 
 export const deleteSlot = async (data) => {
-    const token = await auth.currentUser.getIdToken()
+    // const token = await auth.currentUser.getIdToken()
     const response = await fetch(`${API_URL}/delete-slot`, {
         headers: {
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
             'Accept': 'application/json',
         },
         body: JSON.stringify(data),
         method: "DELETE",
+    })
+    return response.json();
+}
+
+export const sendSlotConfirmation = async (data) => {
+    // const token = await auth.currentUser.getIdToken()
+    const response = await fetch(`${API_URL}/sendConfirmation`, {
+        headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+        method: "POST",
     })
     return response.json();
 }

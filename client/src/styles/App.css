@@ -76,3 +76,8 @@ section{
     width: 40%;
     justify-content: space-evenly;
 }
+
+.loadingContain{
+    height: 100vh;
+    position: relative !important;
+}

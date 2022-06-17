@@ -6,25 +6,30 @@ import { readUserRole } from "../api/users";
 import Popup from 'reactjs-popup';
 import UpdateForm from "../components/UpdateForm"
 import "../styles/Dashboard-style.css"
-import { Link, Navigate } from "react-router-dom";
+import LoadingOverlay from 'react-loading-overlay';
 
 
 const Dashboard = ({ isCustomer, setIsCustomer }) => {
     const [showInputRow, setShowInputRow] = useState(false);
     const [btnText, setBtnText] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState({});
     const dateRef = createRef();
     const timeRef = createRef();
     const availableRef = createRef();
+    LoadingOverlay.propTypes = undefined
+
 
     useEffect(() => {
         getAllSlots();
     }, [])
 
     const getAllSlots = async () => {
+        setLoading(true)
         await getUserRole();
         const allSlots = await readAllSlot(auth.currentUser.uid)
         setData(allSlots)
+        setLoading(false)
     }
 
     const getUserRole = async () => {
@@ -33,6 +38,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
     }
 
     const addSlot = async () => {
+        setLoading(true)
         if (btnText) {
             const date = dateRef.current.value
             const time = timeRef.current.value
@@ -42,6 +48,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
         }
         setShowInputRow(!showInputRow)
         setBtnText(!btnText)
+        setLoading(false)
     }
 
     const onCancel = () => {
@@ -50,6 +57,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
     }
 
     const onDelete = async (uid, slotId) => {
+        setLoading(true)
         await deleteSlot({ uid, slotId })
         window.location.reload(false);
     }
@@ -64,59 +72,66 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
         )
     }
     return (
-        <div className="dashboard-container">
-            <h1 className="dashboard-title">
-                {`Welcome ${auth.currentUser.email || " "}`}
-            </h1>
-            {isCustomer ? "" : <>
-                <table><tbody>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Available</th>
-                        <th className="action-col">Actions </th>
-                    </tr>
-                    {
-                        Object.entries(data).map(slot => {
-                            const slotRef = createRef();
-                            const body = {
-                                uid: auth.currentUser.uid,
-                                slotId: slot[0],
-                                data: slot[1]
-                            }
+        <LoadingOverlay
+            active={loading}
+            spinner={true}
+            text='Loading...'
+            className="loadingContain"
+        >
+            <div className="dashboard-container">
+                <h1 className="dashboard-title">
+                    {`Welcome ${auth.currentUser.email || " "}`}
+                </h1>
+                {isCustomer ? "" : <>
+                    <table><tbody>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Available</th>
+                            <th className="action-col">Actions </th>
+                        </tr>
+                        {
+                            Object.entries(data).map(slot => {
+                                const slotRef = createRef();
+                                const body = {
+                                    uid: auth.currentUser.uid,
+                                    slotId: slot[0],
+                                    data: slot[1]
+                                }
 
-                            return (
-                                <tr ref={slotRef} key={slot[0]}>
-                                    <td>{slot[1].date}</td>
-                                    <td>{slot[1].time}</td>
-                                    <td>{`${slot[1].isAvailable}`}</td>
-                                    <td className="action">
-                                        <div className="action-btn">
-                                            <Popup trigger={
-                                                <button>🖊</button>
-                                            } position="left center">
-                                                <UpdateForm
-                                                    isAvailable={slot[1].isAvailable}
-                                                    date={slot[1].date}
-                                                    time={slot[1].time}
-                                                    body={body}
-                                                />
-                                            </Popup>
-                                            <button onClick={e => onDelete(auth.currentUser.uid, slot[0])} href="">🗑</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                    {SlotEditor(dateRef, timeRef, availableRef)}
-                </tbody></table>
-                <div className="btn-add-slot">
-                    {btnText ? <button onClick={onCancel}>Cancel</button> : ""}
-                    <button onClick={addSlot}>{btnText ? "Submit" : "Add"}</button>
-                </div>
-            </>}
-        </div>
+                                return (
+                                    <tr ref={slotRef} key={slot[0]}>
+                                        <td>{slot[1].date}</td>
+                                        <td>{slot[1].time}</td>
+                                        <td>{`${slot[1].isAvailable}`}</td>
+                                        <td className="action">
+                                            <div className="action-btn">
+                                                <Popup trigger={
+                                                    <button>🖊</button>
+                                                } position="left center">
+                                                    <UpdateForm
+                                                        isAvailable={slot[1].isAvailable}
+                                                        date={slot[1].date}
+                                                        time={slot[1].time}
+                                                        body={body}
+                                                    />
+                                                </Popup>
+                                                <button onClick={e => onDelete(auth.currentUser.uid, slot[0])} href="">🗑</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                        {SlotEditor(dateRef, timeRef, availableRef)}
+                    </tbody></table>
+                    <div className="btn-add-slot">
+                        {btnText ? <button onClick={onCancel}>Cancel</button> : ""}
+                        <button onClick={addSlot}>{btnText ? "Submit" : "Add"}</button>
+                    </div>
+                </>}
+            </div>
+        </LoadingOverlay>
     );
 }
 

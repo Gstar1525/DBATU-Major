@@ -8,13 +8,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "../styles/Dashboard-style.css"
+import LoadingOverlay from 'react-loading-overlay';
+
 
 const BookSlots = () => {
     const [data, setData] = useState({});
-    const [businessName, setBusinessName] = useState("")
+    const [businessEmail, setBusinessEmail] = useState("")
     const { uid } = useParams()
     const dispatch = useDispatch();
     const authUser = useSelector(state => state.userReducer)
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
         onAuthStateChanged(getAuth(), (user) => {
@@ -29,32 +33,40 @@ const BookSlots = () => {
 
     const getBusiness = async () => {
         const business = await getBusinessesByUid(uid);
-        setBusinessName(business[0].email)
+        setBusinessEmail(business[0].email)
     }
 
     const getAllSlots = async () => {
+        setLoading(true)
         const allSlots = await readAllSlot(uid)
         setData(allSlots)
+        setLoading(false)
     }
 
     return (
-        <div className="dashboard-container">
-            <h1 className="dashboard-title">
-                {`Book slot at ${businessName} `}
-            </h1>
-            <table><tbody>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Available</th>
-                </tr>
-                {
-                    Object.entries(data).map(slot => (
-                        <Slot key={slot[0]} data={slot} uid={uid} />
-                    ))
-                }
-            </tbody></table>
-        </div>
+        <LoadingOverlay
+            active={loading}
+            spinner={true}
+            text='Loading...'
+            className="loadingContain"
+        >
+            <div className="dashboard-container">
+                <h1 className="dashboard-title">
+                    {`Book slot at ${businessEmail} `}
+                </h1>
+                <table><tbody>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Available</th>
+                    </tr>
+                    {
+                        Object.entries(data).map(slot => (
+                            <Slot key={slot[0]} setLoading={setLoading} data={slot} uid={uid} businessEmail={businessEmail} />
+                        ))
+                    }
+                </tbody></table>
+            </div></LoadingOverlay>
     );
 }
 

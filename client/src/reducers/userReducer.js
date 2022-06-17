@@ -1,13 +1,8 @@
 const userReducer = (_, action) => {
-    switch (action.type) {
-        case "ISLOGGED":
-            if (action.payload) {
-                return action.payload;
-            }
-            return null;
-        default:    
-            return null;
+    if (action.payload) {
+        return action.payload;
     }
+    return null;
 }
 
 export default userReducer;

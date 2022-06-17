@@ -1,20 +1,25 @@
 import "../styles/Search-style.css"
 import { useEffect, useState } from "react"
 import { getBusinesses } from "../api/businesses"
+import LoadingOverlay from 'react-loading-overlay';
 import { Business } from "../components/Business";
 const Search = () => {
 
     const [businesses, setBusinesses] = useState([]);
     const [searchedBusinesses, setSearchedBusinesses] = useState([])
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         loadBusinesses();
     }, [])
 
     const loadBusinesses = async () => {
+        setLoading(true)
         const res = await getBusinesses();
         console.log(res)
         setBusinesses(res);
         setSearchedBusinesses(res)
+        setLoading(false)
     }
 
     const search = (event) => {
@@ -26,6 +31,12 @@ const Search = () => {
     }
 
     return (
+        <LoadingOverlay
+            active={loading}
+            spinner={true}
+            text='Loading...'
+            className="loadingContain"
+        >
         <div className="search-box-container">
             <form
                 onSubmit={search}
@@ -39,7 +50,7 @@ const Search = () => {
                 <Business key={business.uid} {...business} />
             ))}
         </div>
-
+        </LoadingOverlay>
     );
 }
 

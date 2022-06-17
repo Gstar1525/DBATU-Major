@@ -3,7 +3,7 @@ import { auth } from "../api/firebase-service";
 import { readUserRole, updateUserRole } from "../api/users";
 import "../styles/ProfileMenu-style.css"
 
-const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
+const ProfileMenu = ({ setLoading, isCustomer, setIsCustomer }) => {
 
     const [profileMenu, setProfileMenu] = useState(false);
 
@@ -22,7 +22,9 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
     }
 
     return (
+
         <React.Fragment>
+
             < div className="profile-menu" >
                 <div className="img" onClick={profileOnClick}>
                     <img src={`${process.env.PUBLIC_URL}/user-profile.png`} alt="user profile icon" />
@@ -32,10 +34,13 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
                         ? <div className="list">
                             <div onClick={itemOnClick} className="list-item">Profile</div>
                             <div onClick={async () => {
+                                setLoading(true)
                                 const userRole = await getUserRole();
                                 await updateUserRole(!userRole, auth.currentUser.uid)
                                 setIsCustomer(!userRole)
                                 setProfileMenu(!profileMenu)
+                                setLoading(false)
+
                             }} className="list-item">
                                 {isCustomer
                                     ? "Change to Business"

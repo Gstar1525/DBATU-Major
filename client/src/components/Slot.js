@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { updateSlot } from "../api/slots";
+import { useState } from "react";
+import { updateSlot, sendSlotConfirmation } from "../api/slots";
 import { Link } from "react-router-dom"
+import { auth } from "../api/firebase-service";
 
 
-const Slot = ({ data, uid }) => {
+const Slot = ({ data, uid, businessEmail, setLoading }) => {
     const style = {
         height: "30px",
         width: "70px"
@@ -13,19 +14,24 @@ const Slot = ({ data, uid }) => {
 
     const [available, setAvailable] = useState(slot.isAvailable);
 
-    useEffect(() => {
-        console.log(slot.time, slot.isAvailable);
-    }, [])
-
     const bookSlot = async (event) => {
+        setLoading(true)
         slot.isAvailable = false;
         const body = {
             uid: uid,
             slotId: slotId,
             data: slot
         }
+        const mailBody = {
+            businessesEmail: businessEmail,
+            customerEmail: auth.currentUser.email,
+            slotData: slot
+        }
+
         await updateSlot(body);
         setAvailable(slot.isAvailable);
+        setLoading(false)
+        await sendSlotConfirmation(mailBody)
     }
 
     return (

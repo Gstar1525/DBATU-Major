@@ -5,6 +5,18 @@ const {
     deleteSlot
 } = require("../model/Slot");
 
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.email,
+        pass: process.env.password,
+    },
+});
+
 const postSlots = async (req, res) => {
     const { date, time, isAvailable, uid } = req.body;
     const slot = await createSlot(date, time, isAvailable, uid)
@@ -26,4 +38,21 @@ const deleteSlt = async (req, res) => {
     res.status(201).json(slot);
 }
 
-module.exports = { postSlots, getSlots, putSlot, deleteSlt }
+const sendEmail = async (to, content) => {
+    await transporter.sendMail({
+        from: process.env.email,
+        to: to,
+        subject: "Slot Booked",
+        text: "Hello world?",
+        html: content,
+    });
+}
+
+const sendConfirmation = async (req, res) => {
+    const content = `Slot booked for ${req.body.slotData.date} at ${req.body.slotData.time}`
+    await sendEmail(req.body.businessesEmail, content)
+    await sendEmail(req.body.customerEmail, content)
+    res.status(201).json(content);
+}
+
+module.exports = { postSlots, getSlots, putSlot, deleteSlt, sendConfirmation }
