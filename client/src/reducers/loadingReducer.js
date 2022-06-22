@@ -1,8 +1,8 @@
-const loadingReducer = (_, action) => {
-    if (action.type == "ISLOADING" && action.payload) {
-        return action.payload;
+const loadingReducer = (state = false, action) => {
+    if (action.type === "ISLOADING") {
+        return action.payload
     }
-    return false;
+    return state;
 }
 
 export default loadingReducer;

@@ -13,11 +13,13 @@ import LoadingOverlay from 'react-loading-overlay';
 
 const BookSlots = () => {
     const [data, setData] = useState({});
-    const [businessEmail, setBusinessEmail] = useState("")
+    const [businessData, setBusinessData] = useState("_")
     const { uid } = useParams()
     const dispatch = useDispatch();
     const authUser = useSelector(state => state.userReducer)
     const [loading, setLoading] = useState(false)
+    LoadingOverlay.propTypes = undefined
+
 
 
     useEffect(() => {
@@ -33,7 +35,7 @@ const BookSlots = () => {
 
     const getBusiness = async () => {
         const business = await getBusinessesByUid(uid);
-        setBusinessEmail(business[0].email)
+        setBusinessData(business[0])
     }
 
     const getAllSlots = async () => {
@@ -52,7 +54,7 @@ const BookSlots = () => {
         >
             <div className="dashboard-container">
                 <h1 className="dashboard-title">
-                    {`Book slot at ${businessEmail} `}
+                    {`Book slot at ${businessData.email} `}
                 </h1>
                 <table><tbody>
                     <tr>
@@ -62,7 +64,7 @@ const BookSlots = () => {
                     </tr>
                     {
                         Object.entries(data).map(slot => (
-                            <Slot key={slot[0]} setLoading={setLoading} data={slot} uid={uid} businessEmail={businessEmail} />
+                            <Slot key={slot[0]} data={slot} businessData={businessData} />
                         ))
                     }
                 </tbody></table>

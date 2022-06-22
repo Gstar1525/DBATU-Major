@@ -12,11 +12,13 @@ const createSlot = async (date, time, isAvailable, uid) => {
 
 const readAllSlots = async (uid) => {
     const userSlotsCollection = await db.collection("users-slots").where("uid", "==", `${uid}`).get();
-    const slotsDocRef = await userSlotsCollection.docs[0].ref.collection("slots").get();
     const slots = {}
-    slotsDocRef.docs.map(doc => {
-        slots[doc.id] = doc.data()
-    })
+    if (userSlotsCollection.docs.length !== 0) {
+        const slotsDocRef = await userSlotsCollection.docs[0].ref.collection("slots").get();
+        slotsDocRef.docs.map(doc => {
+            slots[doc.id] = doc.data()
+        })
+    }
     return slots
 }
 
@@ -34,9 +36,17 @@ const deleteSlot = async (uid, slotId) => {
     return slots;
 }
 
+const deleteBookedSlot = async (uid, slotId, colName) => {
+    const slots = await readAllSlots(uid);
+    const userSlotsCollection = await db.collection("users-slots").where("uid", "==", `${uid}`).get();
+    await userSlotsCollection.docs[0].ref.collection(colName).doc(slotId).delete();
+    return slots;
+}
+
 module.exports = {
     createSlot,
     readAllSlots,
     updateSlot,
-    deleteSlot
+    deleteSlot,
+    deleteBookedSlot
 }

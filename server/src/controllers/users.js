@@ -18,4 +18,5 @@ const getUserRole = async (req, res) => {
     res.status(201).json({ isCustomer: userRole })
 }
 
+
 module.exports = { postUser, putUserRole, getUserRole }

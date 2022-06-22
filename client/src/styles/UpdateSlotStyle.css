@@ -1,6 +1,7 @@
 [role="tooltip"].popup-content {
   width: 50%;
-  height: 60%;
+  height: fit-content;
+  padding-block: 50px;
 }
 
 [data-popup="tooltip"].popup-overlay {

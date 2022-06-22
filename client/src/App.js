@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import { useSelector } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { Logo, SearchAndProfile } from './components';
+import { CustomerSlots, Logo, SearchAndProfile } from './components';
 import { Dashboard, Login, Signup, BookSlots } from './screens';
 import LoadingOverlay from 'react-loading-overlay'
 import { useDispatch } from 'react-redux';
@@ -15,8 +15,10 @@ function App() {
 
   const [isCustomer, setIsCustomer] = useState(true);
   const authUser = useSelector(state => state.userReducer)
+  const loading = useSelector(state => state.loadingReducer)
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  LoadingOverlay.propTypes = undefined
+
 
   useEffect(() => {
     onAuthStateChanged(getAuth(), (user) => {
@@ -34,12 +36,13 @@ function App() {
       <React.Fragment>
         <header>
           <Logo />{authUser
-            ? <SearchAndProfile setLoading={setLoading} isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
+            ? <SearchAndProfile isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
             : ""}
         </header>
         <Routes>
           <Route path="/u/:uid" element={<BookSlots />} />
           <Route path='/search' element={<Search />} />
+          
           {ProtectedRoute(!authUser, "/", <Login />, "/dashboard")}
           {ProtectedRoute(!authUser, "/signup", <Signup />, "/dashboard")}
           {ProtectedRoute(authUser, "/dashboard", <Dashboard isCustomer={isCustomer} setIsCustomer={setIsCustomer} />, "/")}

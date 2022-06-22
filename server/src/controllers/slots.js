@@ -2,7 +2,8 @@ const {
     createSlot,
     readAllSlots,
     updateSlot,
-    deleteSlot
+    deleteSlot,
+    deleteBookedSlot
 } = require("../model/Slot");
 
 const nodemailer = require("nodemailer");
@@ -38,6 +39,19 @@ const deleteSlt = async (req, res) => {
     res.status(201).json(slot);
 }
 
+const deleteCustomerBookedSlt = async (req, res) => {
+    await deleteBookedSlot(req.body.uid, req.body.slotId, "booked-at");
+    res.status(201).json({success: true});
+}
+
+const deleteBookedSlt = async (req, res) => {
+    const customerData = req.body.customerData
+    const businessData = req.body.businessData
+    await deleteBookedSlot(customerData.uid, customerData.slotId, "booked-at");
+    await deleteBookedSlot(businessData.uid, businessData.slotId, "booked-by");
+    res.status(201).json({ success: true });
+}
+
 const sendEmail = async (to, content) => {
     await transporter.sendMail({
         from: process.env.email,
@@ -55,4 +69,12 @@ const sendConfirmation = async (req, res) => {
     res.status(201).json(content);
 }
 
-module.exports = { postSlots, getSlots, putSlot, deleteSlt, sendConfirmation }
+module.exports = {
+    postSlots,
+    getSlots,
+    putSlot,
+    deleteSlt,
+    sendConfirmation,
+    deleteCustomerBookedSlt,
+    deleteBookedSlt
+}

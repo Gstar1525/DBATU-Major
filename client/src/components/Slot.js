@@ -2,35 +2,48 @@ import { useState } from "react";
 import { updateSlot, sendSlotConfirmation } from "../api/slots";
 import { Link } from "react-router-dom"
 import { auth } from "../api/firebase-service";
+import { useDispatch } from "react-redux";
+import isLoading from "../actions/isLoading";
+import { postBookingData } from "../api/businesses";
 
 
-const Slot = ({ data, uid, businessEmail, setLoading }) => {
+const Slot = ({ data, businessData }) => {
     const style = {
         height: "30px",
         width: "70px"
     };
+
     const slot = data[1]
     const slotId = data[0]
-
+    const dispatch = useDispatch();
     const [available, setAvailable] = useState(slot.isAvailable);
 
     const bookSlot = async (event) => {
-        setLoading(true)
+        dispatch(isLoading(true))
         slot.isAvailable = false;
         const body = {
-            uid: uid,
+            uid: businessData.uid,
             slotId: slotId,
             data: slot
         }
         const mailBody = {
-            businessesEmail: businessEmail,
+            businessesEmail: businessData.email,
             customerEmail: auth.currentUser.email,
             slotData: slot
         }
-
+        const business = {
+            email: businessData.email,
+            uid: businessData.uid
+        }
+        const customer = {
+            email: auth.currentUser.email,
+            uid: auth.currentUser.uid
+        }
         await updateSlot(body);
+        const bookingData = await postBookingData(business, customer, slot)
+        dispatch(isLoading(false))
         setAvailable(slot.isAvailable);
-        setLoading(false)
+        console.log(bookingData);
         await sendSlotConfirmation(mailBody)
     }
 
@@ -41,9 +54,10 @@ const Slot = ({ data, uid, businessEmail, setLoading }) => {
             <td>
                 {
                     (available === true)
-                        ?
-                        <Link to={`/u/${uid}`}>
-                            <button onClick={bookSlot} style={style}>Book</button>
+                        ? <Link to={`/u/${businessData.uid}`}>
+                            <button onClick={bookSlot} style={style}>
+                                Book
+                            </button>
                         </Link>
                         : "Booked"
                 }

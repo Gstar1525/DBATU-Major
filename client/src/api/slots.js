@@ -64,6 +64,34 @@ export const deleteSlot = async (data) => {
     return response.json();
 }
 
+export const deleteCustomerBookedSlot = async (data) => {
+    // const token = await auth.currentUser.getIdToken()
+    const response = await fetch(`${API_URL}/delete-cutomer-booked-slot`, {
+        headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+        method: "DELETE",
+    })
+    return response.json();
+}
+
+export const deleteBookedSlot = async (data) => {
+    // const token = await auth.currentUser.getIdToken()
+    const response = await fetch(`${API_URL}/delete-booked-slot`, {
+        headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+        method: "DELETE",
+    })
+    return response.json();
+}
+
 export const sendSlotConfirmation = async (data) => {
     // const token = await auth.currentUser.getIdToken()
     const response = await fetch(`${API_URL}/sendConfirmation`, {

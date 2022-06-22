@@ -1,10 +1,17 @@
 const { db } = require("../model/db");
+const admin = require("firebase-admin");
 
 const createUser = async (uid, isCustomer) => {
-    const docRef = await db.collection("users-slots").add({ uid, isCustomer });
-    const get = await docRef.get()
-    const data = get.data();
-    return data;
+    const users = await db.collection("users-slots").where("uid", "==", `${uid}`).get();
+    if (users.empty) {
+        console.log("user created", isCustomer);
+        const docRef = await db.collection("users-slots").add({ uid, isCustomer });
+        const get = await docRef.get()
+        const data = get.data();
+        return data;
+    } else {
+        return {};
+    }
 }
 
 const updateUserRole = async (uid, isCustomer) => {
