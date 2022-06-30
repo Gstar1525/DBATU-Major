@@ -54,3 +54,21 @@ export const readUserRole = async (uid) => {
     }
     return undefined
 }
+
+export const getUserData = async (uid) => {
+    try {
+        // const token = await auth.currentUser.getIdToken()
+        const response = await fetch(`${API_URL}/get-user-data`, {
+            headers: {
+                // Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ uid }),
+            method: "POST",
+        });
+        return response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}

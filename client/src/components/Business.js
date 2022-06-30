@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
-export const Business = ({ email, uid }) => {
+export const Business = ({ displayName, email, uid, businessData }) => {
 
     const style = {
         margin: "auto",
@@ -14,10 +14,11 @@ export const Business = ({ email, uid }) => {
     }
 
     return (
-        <Link style={{ textDecoration: "none" }} to={`/u/${uid}`}>
+        <Link style={{ textDecoration: "none", textAlign:"left !important" }} to={`/u/${uid}`}>
             <div style={style}>
-                <h1>{email}</h1>
-                <h1>{uid}</h1>
+                <h1>{displayName}</h1>
+                <h2>{businessData.description}</h2>
+                <h3>{businessData.address}</h3>
             </div >
         </Link>
     )

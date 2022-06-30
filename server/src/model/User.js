@@ -21,11 +21,6 @@ const updateUserRole = async (uid, isCustomer) => {
     })
 }
 
-const readUsersDoc = async (docRefID) => {
-    const response = await db.collection("users-slots").doc(docRefID).get();
-    return response.data()
-}
-
 const readUserRole = async (uid) => {
     const users = await db.collection("users-slots").where("uid", "==", uid).get();
     const dc = {
@@ -37,8 +32,20 @@ const readUserRole = async (uid) => {
     return dc.data.isCustomer;
 }
 
+const readUserData = async (uid) => {
+    const auth = admin.auth();
+    const user = await auth.getUser(uid);
+    const userSlot = await db.collection("users-slots").where("uid", "==", uid).get();
+    const userData = userSlot.docs[0].data()
+    const data = { uid: uid, ...userData }
+    data["displayName"] = user.displayName;
+    data["email"] = user.email;
+    return data;
+}
+
 module.exports = {
     createUser,
     updateUserRole,
-    readUserRole
+    readUserRole,
+    readUserData
 }

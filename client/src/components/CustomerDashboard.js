@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import isLoading from "../actions/isLoading";
 import Popup from 'reactjs-popup';
 import "../styles/Dashboard-style.css"
+import { getUserData } from "../api/users";
 
 
 const CustomerDashboard = () => {
@@ -47,7 +48,21 @@ const CustomerDashboard = () => {
         window.location.reload("/dashboard");
     }
 
-    const BookingDataReceipt = ({close, data }) => {
+    const BookingDataReceipt = ({ close, data }) => {
+
+        console.log(data);
+
+        const [busiData, setBusiData] = useState(({ displayName: "Loading...", email: "Loading..." }));
+        
+        const getBusiData = async () => {
+            const d = await getUserData(data[1].uid);
+            setBusiData(d)
+        }
+
+        useState(()=> {
+            getBusiData()
+        },[])
+
 
         const style = {
             width: "85%",
@@ -59,17 +74,15 @@ const CustomerDashboard = () => {
         const Gap = () => <><br /><hr /><br /></>
         return (
             <div style={style}>
+                <h3><u>Slot Id</u> - {data[1].data.slotId}</h3>
                 <h3><u>Time</u> - {data[1].data.time}</h3>
                 <h3><u>Date</u> - {data[1].data.date}</h3>
-                <h3><u>Booked By</u> - {auth.currentUser.email}</h3>
                 <Gap />
-                <h3><u>Booked By</u> - Customer Name</h3>
+                <h3><u>Booked By</u> - {auth.currentUser.displayName}</h3>
                 <h3><u>Email</u> - {auth.currentUser.email}</h3>
-                <h3><u>Phone number</u> - Customer Phone Number</h3>
                 <Gap />
-                <h3><u>Booked At</u> - Business Name</h3>
-                <h3><u>Email</u> - {data[1].email}</h3>
-                <h3><u>Phone number</u> - Business Phone Number</h3>
+                <h3><u>Booked At</u> - {busiData.displayName}</h3>
+                <h3><u>Email</u> - {busiData.email}</h3>
                 <button
                     onClick={
                         async () => {
@@ -89,7 +102,7 @@ const CustomerDashboard = () => {
         )
     }
 
-    
+
 
     return (
         Object.keys(bookedSlots).length !== 0 ?
@@ -103,24 +116,23 @@ const CustomerDashboard = () => {
                     </tr>
                     {
                         Object.entries(bookedSlots).map(slot => {
-                            
+
                             return (
                                 <tr key={slot[0]}>
                                     <td>{slot[1].email}</td>
-                                    <td>{slot[1].data.time}</td>
                                     <td>{slot[1].data.date}</td>
+                                    <td>{slot[1].data.time}</td>
                                     <td className="action">
                                         <div className="action-btn">
-                                            <button onClick={() => removeSlot(slot)}>✖</button>
                                             <Popup
                                                 trigger={
                                                     <button>👁</button>
                                                 } position="left center">
-                                                    {
-                                                        close => (
-                                                            <BookingDataReceipt data={slot} close={close}/>
-                                                        )
-                                                    }
+                                                {
+                                                    close => (
+                                                        <BookingDataReceipt data={slot} close={close} />
+                                                    )
+                                                }
 
                                             </Popup>
                                         </div>

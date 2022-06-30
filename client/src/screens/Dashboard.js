@@ -8,6 +8,7 @@ import UpdateForm from "../components/UpdateForm"
 import "../styles/Dashboard-style.css"
 import LoadingOverlay from 'react-loading-overlay';
 import { CustomerDashboard } from "../components";
+import BookingDataReceipt from "../components/BookingDataReceipt";
 
 
 const Dashboard = ({ isCustomer, setIsCustomer }) => {
@@ -30,7 +31,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
         setLoading(true)
         await getUserRole();
         const allSlots = await readAllSlot(auth.currentUser.uid)
-        setData(allSlots)
+            setData(allSlots)
         setLoading(false)
     }
 
@@ -80,6 +81,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
     }
 
     const ActionButtons = ({ body, slot }) => {
+
         return (
             <div className="action-btn">
                 <Popup trigger={
@@ -93,7 +95,19 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
                     />
                 </Popup>
                 <button onClick={e => onDelete(auth.currentUser.uid, slot[0])}>🗑</button>
-                <button>👁</button>
+                {
+                    (!slot[1].isAvailable)
+                        ? <Popup trigger={
+                            <button>👁</button>
+                        } position="left center">
+                            {
+                                close => (
+                                    <BookingDataReceipt data={slot} close={close} />
+                                )
+                            }
+                        </Popup>
+                        : null
+                }
             </div>
         )
     }
@@ -106,7 +120,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
         >
             <div className="dashboard-container">
                 <h1 className="dashboard-title">
-                    {`Welcome ${auth.currentUser.email || " "}`}
+                    {`Welcome ${auth.currentUser.displayName || " "}`}
                 </h1>
                 {isCustomer
                     ? <CustomerDashboard />

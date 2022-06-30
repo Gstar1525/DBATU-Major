@@ -54,7 +54,7 @@ const BookSlots = () => {
         >
             <div className="dashboard-container">
                 <h1 className="dashboard-title">
-                    {`Book slot at ${businessData.email} `}
+                    {`Book slot at ${businessData.displayName || ""} `}
                 </h1>
                 <table><tbody>
                     <tr>

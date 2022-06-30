@@ -15,6 +15,7 @@ const Slot = ({ data, businessData }) => {
 
     const slot = data[1]
     const slotId = data[0]
+    slot["slotId"] = slotId
     const dispatch = useDispatch();
     const [available, setAvailable] = useState(slot.isAvailable);
 

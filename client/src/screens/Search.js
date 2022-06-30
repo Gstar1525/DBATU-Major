@@ -16,7 +16,6 @@ const Search = () => {
     const loadBusinesses = async () => {
         setLoading(true)
         const res = await getBusinesses();
-        console.log(res)
         setBusinesses(res);
         setSearchedBusinesses(res)
         setLoading(false)
@@ -26,8 +25,17 @@ const Search = () => {
         event.preventDefault()
         const formData = new FormData(event.target);
         const credentials = Object.fromEntries(formData)
-        setSearchedBusinesses(businesses.filter((business) => business.email.includes(credentials.searchText)));
-        console.log(searchedBusinesses);
+        setSearchedBusinesses(businesses.filter((business) => {
+            console.log(business.businessData.description);
+            const displayName = business.displayName.toLowerCase();
+            const address = business.businessData.address.toLowerCase();
+            const description = business.businessData.description.toLowerCase();
+            const searchText = credentials.searchText.toLowerCase();
+            
+            return displayName.includes(searchText) ||
+                description.includes(searchText) ||
+                address.includes(searchText)
+        }));
     }
 
     return (
@@ -37,19 +45,20 @@ const Search = () => {
             text='Loading...'
             className="loadingContain"
         >
-        <div className="search-box-container">
-            <form
-                onSubmit={search}
-                className="search-box" action=""
-            >
-                <input placeholder="Search and Book" type="text" name="searchText" />
-                <button type="submit">Search</button>
-            </form>
+            <div className="search-box-container">
+                <form
+                    onSubmit={search}
+                    className="search-box" action=""
+                >
+                    <input placeholder="Search and Book" type="text" name="searchText" />
+                    <button type="submit">Search</button>
+                </form>
 
-            {searchedBusinesses.map(business => (
-                <Business key={business.uid} {...business} />
-            ))}
-        </div>
+                {searchedBusinesses.map(business => {
+                    return <Business key={business.uid} {...business} />
+                }
+                )}
+            </div>
         </LoadingOverlay>
     );
 }

@@ -58,10 +58,16 @@ const readAllBookingData = async (data) => {
 }
 
 const insertBookingData = async (business, customer, slotData) => {
-    const businessData = await addBookingData(business.uid, "booked-by", customer, slotData);
-    business["docId"] = businessData.docId
-    const customerData = await addBookingData(customer.uid, "booked-at", business, slotData);
-    return [businessData, customerData]
+    const businessDoc = await addBookingData(business.uid, "booked-by", customer, slotData);
+    const customerDoc = await addBookingData(customer.uid, "booked-at", business, slotData);
+
+    business["docId"] = businessDoc.docId
+    customer["docId"] = customerDoc.docId
+
+    await updateBookingData(business.uid, "booked-by", customer, slotData);
+    await updateBookingData(customer.uid, "booked-at", business, slotData);
+
+    return [businessDoc, customerDoc]
 }
 
 const addBookingData = async (uid, collectionName, userData, slotData) => {
@@ -79,6 +85,18 @@ const addBookingData = async (uid, collectionName, userData, slotData) => {
         ...get.data()
     }
     return res
+}
+
+const updateBookingData = async (uid, collectionName, userData, slotData) => {
+    const slots = await db
+        .collection("users-slots")
+        .where("uid", "==", `${uid}`).get();
+
+    const dRef = await slots.docs[0].ref
+        .collection(collectionName)
+        .get()
+
+    await dRef.docs[0].ref.update({ ...userData, data: slotData });
 }
 
 module.exports = {

@@ -37,10 +37,9 @@ const deleteSlot = async (uid, slotId) => {
 }
 
 const deleteBookedSlot = async (uid, slotId, colName) => {
-    const slots = await readAllSlots(uid);
     const userSlotsCollection = await db.collection("users-slots").where("uid", "==", `${uid}`).get();
     await userSlotsCollection.docs[0].ref.collection(colName).doc(slotId).delete();
-    return slots;
+    return { "success": true };
 }
 
 module.exports = {

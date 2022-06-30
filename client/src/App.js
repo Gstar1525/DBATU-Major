@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './styles/App.css';
 import { useSelector } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { CustomerSlots, Logo, SearchAndProfile } from './components';
+import { Logo, SearchAndProfile } from './components';
 import { Dashboard, Login, Signup, BookSlots } from './screens';
-import LoadingOverlay from 'react-loading-overlay'
 import { useDispatch } from 'react-redux';
 import { isLogged } from './actions/isLogged';
 import { getAuth } from './api/auth';
 import { onAuthStateChanged } from 'firebase/auth';
+import LoadingOverlay from 'react-loading-overlay'
+import './styles/App.css';
 import Search from './screens/Search';
 
 function App() {
@@ -35,14 +35,16 @@ function App() {
     >
       <React.Fragment>
         <header>
-          <Logo />{authUser
-            ? <SearchAndProfile isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
-            : ""}
+            <Logo/>
+          {
+            authUser
+              ? <SearchAndProfile isCustomer={isCustomer} setIsCustomer={setIsCustomer} />
+              : ""
+          }
         </header>
         <Routes>
           <Route path="/u/:uid" element={<BookSlots />} />
           <Route path='/search' element={<Search />} />
-          
           {ProtectedRoute(!authUser, "/", <Login />, "/dashboard")}
           {ProtectedRoute(!authUser, "/signup", <Signup />, "/dashboard")}
           {ProtectedRoute(authUser, "/dashboard", <Dashboard isCustomer={isCustomer} setIsCustomer={setIsCustomer} />, "/")}
