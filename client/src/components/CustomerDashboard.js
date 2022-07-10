@@ -59,7 +59,7 @@ const CustomerDashboard = () => {
             setBusiData(d)
         }
 
-        useState(()=> {
+        useEffect(()=> {
             getBusiData()
         },[])
 

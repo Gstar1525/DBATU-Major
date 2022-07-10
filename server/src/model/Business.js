@@ -28,12 +28,14 @@ const readBusinesses = async () => {
 const readBusinessesByUid = async (uid) => {
     const users = []
     const auth = admin.auth();
-    const user = await auth.getUser(uid);
+    // TODO
     const businessDoc = await db.collection("users-slots")
         .where("uid", "==", uid).get();
 
+
     if (businessDoc.docs.length !== 0) {
         const businessData = businessDoc.docs[0].data().businessData
+        const user = await auth.getUser(uid);
         users.push({
             uid: user.uid,
             displayName: user.displayName,
@@ -97,6 +99,7 @@ const updateBookingData = async (uid, collectionName, userData, slotData) => {
         .get()
 
     await dRef.docs[0].ref.update({ ...userData, data: slotData });
+
 }
 
 module.exports = {
