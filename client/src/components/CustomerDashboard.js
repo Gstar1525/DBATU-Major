@@ -109,7 +109,7 @@ const CustomerDashboard = () => {
             <table>
                 <tbody>
                     <tr>
-                        <th>Booked At</th>
+                        <th>Slot Number</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th className="action-col">Actions </th>
@@ -118,8 +118,8 @@ const CustomerDashboard = () => {
                         Object.entries(bookedSlots).map(slot => {
 
                             return (
-                                <tr key={slot[0]}>
-                                    <td>{slot[1].email}</td>
+                                <tr key={slot[1].data.slotId}>
+                                    <td>{slot[1].data.slotId}</td>
                                     <td>{slot[1].data.date}</td>
                                     <td>{slot[1].data.time}</td>
                                     <td className="action">
