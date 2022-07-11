@@ -4,7 +4,10 @@ const admin = require("../firebase-service")
 
 const createBusiness = async (data) => {
     const userSlotsCollection = await db.collection("users-slots").where("uid", "==", `${data.uid}`).get();
-    userSlotsCollection.docs[0].ref.update({ businessData: data.businessData })
+    console.log("update", data);
+    const auth = admin.auth();
+    await userSlotsCollection.docs[0].ref.update({ businessData: data.businessData })
+    await auth.updateUser(data.uid, { displayName: data.displayName, email: data.email })
 }
 
 const readBusinesses = async () => {

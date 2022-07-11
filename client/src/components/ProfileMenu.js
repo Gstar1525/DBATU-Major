@@ -48,36 +48,37 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
                 settingsForm.current["address"].value = businessData.address;
             }
             if (isCustomer) {
-                settingsForm.current["description"].disabled = true;
-                settingsForm.current["contactNumber"].disabled = true;
-                settingsForm.current["address"].disabled = true;
+                settingsForm.current["description"].readOnly = true;
+                settingsForm.current["contactNumber"].readOnly = true;
+                settingsForm.current["address"].readOnly = true;
             }
         }
 
         const saveSettings = async (event) => {
+
+
             dispatch(isLoading(true));
             event.preventDefault();
             const formData = new FormData(event.target);
             const settingsData = Object.fromEntries(formData);
-            
-            if (settingsData.isCustomer === "on") {
-                const response = await postBusiness({
-                    uid: auth.currentUser.uid,
-                    businessData: {
-                        "description": settingsData.description,
-                        "contactNumber": settingsData.contactNumber,
-                        "address": settingsData.address,
-                    }
-                });
-            }
+
+            const response = await postBusiness({
+                uid: auth.currentUser.uid,
+                displayName: settingsData.displayName,
+                email: settingsData.email,
+                businessData: {
+                    "description": settingsData.description,
+                    "contactNumber": settingsData.contactNumber,
+                    "address": settingsData.address,
+                }
+            });
 
             if (roleChanged) {
                 await updateUserRole(!isCustomer, auth.currentUser.uid);
-            } else {
-                await updateUserRole(isCustomer, auth.currentUser.uid);
             }
 
             dispatch(isLoading(false));
+            window.location.reload();
         };
 
         useEffect(loadBusinessData, []);
@@ -96,9 +97,9 @@ const ProfileMenu = ({ isCustomer, setIsCustomer }) => {
                     <label>Switch To Business Account</label>
                     <input
                         onChange={() => {
-                            settingsForm.current["description"].disabled = checked;
-                            settingsForm.current["contactNumber"].disabled = checked;
-                            settingsForm.current["address"].disabled = checked;
+                            settingsForm.current["description"].readOnly = checked;
+                            settingsForm.current["contactNumber"].readOnly = checked;
+                            settingsForm.current["address"].readOnly = checked;
                             setChecked(!checked);
                             setRoleChanged(!roleChanged);
                         }}
