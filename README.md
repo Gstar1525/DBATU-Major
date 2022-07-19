@@ -1,5 +1,86 @@
 # Token - A Universal Booking App for every business
 
+Token is for slot bookings and get tokens anywhere and anytime. It can be used by any businesses or intuitions, whoever wants to implement a booking system, whether they are small or well established, there customers can easily do bookings without visiting the place.
+	
+Token contains feature for businesses or intuitions to register themselves. People can watch available time slots and book them. 
+
+<br/>
+
+## Tech Stack
+
+- ### Frontend : React, CSS
+- ### Backend : ExpressJS, NodeJS
+- ### Cloud Service : Firebase
+
+<br/>
+
+
+## Screenshots
+
+- ### Login Page
+<img src="./readme-files/screenshots/login.png" width=750/>
+
+<br/>
+
+- ### Signup Page
+<img src="./readme-files/screenshots/signup.png" width=750/>
+
+<br/>
+
+- ### Customer Dashboard
+<img src="./readme-files/screenshots/Customer Dashboard.png" width=750/>
+
+<br/>
+
+- ### Business Dashboard
+<img src="./readme-files/screenshots/Business Dashboard.png" width=750/>
+
+<br/>
+
+- ### Add New Slots
+<img src="./readme-files/screenshots/Add Slot.png" width=750/>
+
+<br/>
+
+- ### Profile Menu
+<img src="./readme-files/screenshots/menu.png" width=750/>
+
+<br/>
+
+- ### Booking Reciept
+<img src="./readme-files/screenshots/reciept.png" width=750/>
+
+<br/>
+
+- ### Profile Settings
+<img src="./readme-files/screenshots/settings.png" width=750/>
+
+<br/>
+
+- ### Search
+<img src="./readme-files/screenshots/search.png" width=750/>
+
+<br/>
+
+- ### Booking Terminal
+<img src="./readme-files/screenshots/booking terminal.png" width=750/>
+
+<br/>
+
+<br/>
+
+## Architecutral Diagrams
+
+- ### Use Case Diagrams
+<img src="./readme-files/screenshots/Use Case Diagram.png" width=750/>
+
+<br/>
+
+- ### Dataflow Diagrams
+<img src="./readme-files/screenshots/Data flow Diagram.png" width=750/>
+
+<br/>
+
 ## Steps to run project in development mode
 - setup firebase console and add firebase service key to
 ```src/api/firebase-service.js```.<br>

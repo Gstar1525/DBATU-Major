@@ -73,6 +73,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
     const SlotEditor = (date, time, isAvailable) => {
         return (
             <tr style={{ display: (showInputRow && isCustomer === false) ? "" : "none" }}>
+                <td></td>
                 <td><input required ref={date} placeholder="date" type="date" /></td>
                 <td><input required ref={time} placeholder="time" type="time" /></td>
                 <td><input required ref={isAvailable} placeholder="available" type="checkbox" /></td>
