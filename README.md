@@ -18,12 +18,12 @@ Token contains feature for businesses or intuitions to register themselves. Peop
 ## Screenshots
 
 - ### Login Page
-<img src="./readme-files/screenshots/login.png" width=750/>
+<img src="./readme-files/screenshots/Login.png" width=750/>
 
 <br/>
 
 - ### Signup Page
-<img src="./readme-files/screenshots/signup.png" width=750/>
+<img src="./readme-files/screenshots/Signup.png" width=750/>
 
 <br/>
 
@@ -48,7 +48,7 @@ Token contains feature for businesses or intuitions to register themselves. Peop
 <br/>
 
 - ### Booking Reciept
-<img src="./readme-files/screenshots/reciept.png" width=750/>
+<img src="./readme-files/screenshots/Reciept.png" width=750/>
 
 <br/>
 
@@ -63,7 +63,7 @@ Token contains feature for businesses or intuitions to register themselves. Peop
 <br/>
 
 - ### Booking Terminal
-<img src="./readme-files/screenshots/booking terminal.png" width=750/>
+<img src="./readme-files/screenshots/Booking Terminal.png" width=750/>
 
 <br/>
 
