@@ -31,7 +31,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
         setLoading(true)
         await getUserRole();
         const allSlots = await readAllSlot(auth.currentUser.uid)
-            setData(allSlots)
+        setData(allSlots)
         setLoading(false)
     }
 
@@ -127,6 +127,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
                     : <>
                         <table><tbody>
                             <tr>
+                                <th>Slot Id</th>
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Available</th>
@@ -143,6 +144,7 @@ const Dashboard = ({ isCustomer, setIsCustomer }) => {
 
                                     return (
                                         <tr ref={slotRef} key={slot[0]}>
+                                            <td>{slot[0]}</td>
                                             <td>{slot[1].date}</td>
                                             <td>{slot[1].time}</td>
                                             <td>{`${slot[1].isAvailable}`}</td>
